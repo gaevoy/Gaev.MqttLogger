@@ -1,0 +1,11 @@
+[Unit]
+Description=Local to Cloud AutoSSH tunnel
+After=network-online.target
+
+[Service]
+Environment="AUTOSSH_GATETIME=0"
+ExecStart=/usr/bin/autossh -M 0 -o "ServerAliveInterval=30" -o "ServerAliveCountMax=3" -o "ExitOnForwardFailure=yes" -NR 1880:127.0.0.1:1880 -NR 1883:127.0.0.1:1883 root@app.gaevoy.com
+ExecStop=/usr/bin/killall autossh
+
+[Install]
+WantedBy=multi-user.target
